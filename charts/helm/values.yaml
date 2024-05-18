@@ -1,0 +1,40 @@
+replicaCount: 1
+
+image:
+  pullPolicy: IfNotPresent
+  repository: cr.yandex/crpr9jlf6k4254l80050/pidor_bot
+  version: main-0257ab4
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: false
+  name:
+
+podSecurityContext: {}
+
+securityContext: {}
+
+
+service:
+  type: LoadBalancer
+  port: 80
+
+ingress:
+  enabled: false
+  annotations: {}
+
+  hosts:
+    - host: chart-example.local
+      paths: []
+  tls: []
+
+
+resources: {}
+
+nodeSelector: {}
+tolerations: []
+
+affinity: {}

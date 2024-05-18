@@ -44,8 +44,7 @@ jobs:
 
     - name: Update Version
       run: |
-          version=$(cat ./charts/helm-example/values.yaml | grep version: | awk '{print $2}')
-          sed -i "s/$version/${{ github.sha }}/" ./charts/helm/values.yaml
+          sed -i "s|version: .*|${{ github.sha }}|g" ./charts/helm/values.yaml
           
     - name: Commit and push changes
       uses: devops-infra/action-commit-push@v0.3

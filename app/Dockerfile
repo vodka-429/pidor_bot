@@ -10,9 +10,9 @@ WORKDIR /opt/pidor_bot
 
 COPY --from=builder /root/.local /root/.local
 COPY ./main.py .
-COPY ./repositories .
-COPY ./routers .
-COPY ./services .
+COPY ./repositories repositories
+COPY ./routers routers
+COPY ./services services
 
 ENV PATH=/root/.local:$PATH
 

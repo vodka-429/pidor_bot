@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "pidor_app.fullname" . }}
+  name: {{ include "app.fullname" . }}
   labels:
-    {{- include "pidor_app.labels" . | nindent 4 }}
+    {{- include "app.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "pidor_app.selectorLabels" . | nindent 6 }}
+      {{- include "app.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -16,7 +16,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "pidor_app.labels" . | nindent 8 }}
+        {{- include "app.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}

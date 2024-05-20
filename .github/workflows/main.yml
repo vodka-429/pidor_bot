@@ -15,7 +15,6 @@ on:
 
 env:
   ECR_REPOSITORY: gitops-argocd
-  BACKEND_IMAGE: ${{ secrets.DOCKER_HUB_USERNAME }}/text-to-image-api:${{ github.sha }}
 
 jobs:
   build:
@@ -39,15 +38,16 @@ jobs:
         CR_REPOSITORY: pidor_bot
         IMAGE_TAG: ${{ github.sha }}
       run: |
-        docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG .
+        docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG app/
         docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
 
-    - name: Update Version
-      run: |
-        sed -i "s|version: .*|version: ${{ github.sha }}|g" ./charts/helm/values.yaml
-          
-    - name: Commit and push changes
-      uses: devops-infra/action-commit-push@v0.3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        commit_message: Version charts/helm/values.yaml updated
+    # TODO: enable for app
+    # - name: Update Version
+    #   run: |
+    #     sed -i "s|version: .*|version: ${{ github.sha }}|g" ./charts/helm/values.yaml
+    #       
+    # - name: Commit and push changes
+    #   uses: devops-infra/action-commit-push@v0.3
+    #   with:
+    #     github_token: ${{ secrets.GITHUB_TOKEN }}
+    #     commit_message: Version charts/helm/values.yaml updated

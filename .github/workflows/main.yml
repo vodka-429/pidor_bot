@@ -15,6 +15,7 @@ on:
 
 env:
   ECR_REPOSITORY: gitops-argocd
+  VERSION: ${{ github.run_number }}-${{ github.sha }}
 
 jobs:
   build:
@@ -31,23 +32,24 @@ jobs:
       with:
         yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
 
+    - name: Add SHORT_SHA env property with commit short sha
+      run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
 
     - name: Build, tag, and push image to Yandex Cloud Container Registry
       env:
         CR_REGISTRY: crpr9jlf6k4254l80050
         CR_REPOSITORY: pidor_bot
-        IMAGE_TAG: ${{ github.sha }}
+        IMAGE_TAG: ${{ env.VERSION }}
       run: |
         docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG app/
         docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
 
-    # TODO: enable for app
-    # - name: Update Version
-    #   run: |
-    #     sed -i "s|version: .*|version: ${{ github.sha }}|g" ./charts/helm/values.yaml
-    #       
-    # - name: Commit and push changes
-    #   uses: devops-infra/action-commit-push@v0.3
-    #   with:
-    #     github_token: ${{ secrets.GITHUB_TOKEN }}
-    #     commit_message: Version charts/helm/values.yaml updated
+    - name: Update Version
+      run: |
+        sed -i "s|version: .*|version: ${{ env.VERSION }}|g" ./charts/app/values.yaml
+
+    - name: Commit and push changes
+      uses: devops-infra/action-commit-push@v0.3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        commit_message: Version charts/app/values.yaml updated

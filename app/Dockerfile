@@ -13,6 +13,7 @@ COPY ./main.py .
 COPY ./repositories repositories
 COPY ./routers routers
 COPY ./services services
+COPY ./utils utils
 
 ENV PATH=/root/.local:$PATH
 

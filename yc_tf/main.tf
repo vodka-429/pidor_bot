@@ -16,6 +16,9 @@ variable "yc_folder_id" {
   type = string
   description = "Yandex Cloud folder id"
 }
+variable "mongo_password" {
+  type = string
+}
 
 #-----
 

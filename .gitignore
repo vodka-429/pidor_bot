@@ -33,6 +33,8 @@ override.tf.json
 .terraformrc
 terraform.rc
 
+.terraform.lock.hcl
+
 # PYTHON
 result.json
 stats.ipynb

@@ -3,13 +3,18 @@ from aiogram.filters import Command
 from aiogram.types import Message
 
 from services import pidor_service
+from utils import mongo
 
 router = Router()
 
 
 def mock(message: Message):
     user = message.from_user.username
-    text = "{}, ты пидор!".format(user)
+    check = mongo.check()
+    if user in check:
+        text = "{}, ты пидор!".format(user)
+    else:
+        text = "{}, ты мега пидор!".format(user)
     return text
 
 

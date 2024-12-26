@@ -43,10 +43,12 @@ def mock(message: Message):
 @router.message(F.text, Command("set"))
 async def set(message: Message):
     if message.chat.id == -4608252738:
-        login, count = message.text.split(" ")
         try:
+            login, count = message.text.split(" ")
             mongo.set_count(login, count)
         except Exception:
+            logger.debug('Get message: {}'.format(message))
+            logger.debug('Get message.text: {}'.format(message.text))
             await message.answer('Huinya')
 
         await message.answer('Done')

@@ -60,7 +60,7 @@ async def set(message: Message):
         await message.answer('Done')
 
 
-@router.message(F.text, Command("pidor"))
+@router.message(F.text, Command("vodka_pidor"))
 async def pidor(message: Message):
     if not skip_chat(message):
         await message.answer(mock(message))
@@ -83,7 +83,7 @@ def build_player_table(player_list: list[tuple[str, int]]) -> str:
     return ''.join(result)
 
 
-@router.message(F.text, Command("pidorstats"))
+@router.message(F.text, Command("vodka_pidorstats"))
 async def pidorstats(message: Message):
     if not skip_chat(message):
         user = message.from_user.username

@@ -21,13 +21,13 @@ def check():
 
 
 def pidorstats():
-    res = {}
+    res = []
     db = connect()
 
     for line in db.pidors.find():
         login = line.get('login')
         count = line.get('count', 0)
-        res[login] = count
+        res.append(login, count)
 
     return res
 

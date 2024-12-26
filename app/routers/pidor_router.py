@@ -40,14 +40,6 @@ def mock(message: Message):
     return text
 
 
-@router.message()
-async def custom_set_pidor(message: Message):
-    if not skip_chat(message):
-        logger.debug('Get message: {}'.format(message))
-        if 'на Алю' in message.text:
-            mongo.add_one('s_alevtina')
-
-
 @router.message(F.text, Command("set"))
 async def set(message: Message):
     if message.chat.id == -4608252738:
@@ -118,6 +110,14 @@ async def pidorlist(message: Message):
 async def pidordel(message: Message):
     if not skip_chat(message):
         await message.answer(mock(message))
+
+
+@router.message()
+async def custom_set_pidor(message: Message):
+    if not skip_chat(message):
+        logger.debug('Get message: {}'.format(message))
+        if 'на Алю' in message.text:
+            mongo.add_one('s_alevtina')
 
 
 # TODO: Implement this

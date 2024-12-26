@@ -2,8 +2,19 @@ from aiogram import F, Router
 from aiogram.filters import Command
 from aiogram.types import Message
 
-from services import pidor_service
 from utils import mongo
+import logging
+import sys
+
+logger = logging.getLogger('autoadmin')
+
+_format = logging.Formatter(
+    "[%(asctime)s] [%(levelname)s] [%(name)s] [%(threadName)s] [%(process)d] %(message)s"
+)
+_handler = logging.StreamHandler(sys.stdout)
+_handler.setFormatter(_format)
+logging.getLogger().setLevel(logging.DEBUG)
+logging.getLogger().addHandler(_handler)
 
 router = Router()
 
@@ -16,6 +27,11 @@ def mock(message: Message):
     else:
         text = "{}, ты мега пидор!".format(user)
     return text
+
+
+@router.message()
+async def custom_set_pidor(message: Message):
+    logger.debug('Get message: {}'.format(message))
 
 
 @router.message(F.text, Command("pidor"))

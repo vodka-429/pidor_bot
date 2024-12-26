@@ -27,7 +27,7 @@ def pidorstats():
     for line in db.pidors.find():
         login = line.get('login')
         count = line.get('count', 0)
-        res.append(login, count)
+        res.append((login, count))
 
     return res
 

@@ -82,6 +82,7 @@ async def pidorstats(message: Message):
     if not skip_chat(message):
         user = message.from_user.username
         stats = mongo.pidorstats()
+        stats.sort(key=lambda x: x[1], reverse=True)
         answer = "Топ-10 *пидоров* за текущий год:\n\n"
         player_table = build_player_table(stats)
         answer += player_table

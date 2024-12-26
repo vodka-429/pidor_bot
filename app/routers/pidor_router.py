@@ -44,7 +44,7 @@ def mock(message: Message):
 async def set(message: Message):
     if message.chat.id == -4608252738:
         try:
-            login, count = message.text.split(" ")
+            _, login, count = message.text.split(" ")
             mongo.set_count(login, count)
         except Exception:
             logger.debug('Get message: {}'.format(message))
